@@ -1,44 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://3xupn2aydl6j"]
+[gd_scene load_steps=4 format=3 uid="uid://3xupn2aydl6j"]
 
-[ext_resource type="Texture2D" uid="uid://cajik18k3pojp" path="res://icon.svg" id="1_co42c"]
-[ext_resource type="Script" path="res://scripts/movement.cs" id="1_fvd6p"]
-[ext_resource type="Texture2D" uid="uid://cjui0p7q7jki6" path="res://sprites/bricks.png" id="3_ftf57"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_8sg4n"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ia6l"]
-size = Vector2(54, 54)
+[sub_resource type="ImageTexture" id="ImageTexture_vrn2u"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ssn6i"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jumpf"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1xq4v"]
+albedo_color = Color(0, 1, 0, 1)
+metallic = 0.5
+emission_energy_multiplier = 0.0
+normal_texture = SubResource("ImageTexture_vrn2u")
+grow_amount = 1.01
 
 [node name="default scene" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(3, 0)
-script = ExtResource("1_fvd6p")
-speed = 1000.0
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, 0, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-scale = Vector2(1.19, 1.19)
-shape = SubResource("RectangleShape2D_5ia6l")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_8sg4n")
 
-[node name="Icon" type="Sprite2D" parent="CharacterBody2D"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_co42c")
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-position_smoothing_enabled = true
-position_smoothing_speed = 15.0
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(278, -118)
-physics_material_override = SubResource("PhysicsMaterial_ssn6i")
-
-[node name="Bricks" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-277, 286)
-texture = ExtResource("3_ftf57")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-277, 286)
-scale = Vector2(3.2, 3.2)
-shape = SubResource("RectangleShape2D_jumpf")
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D"]
+material = SubResource("StandardMaterial3D_1xq4v")
