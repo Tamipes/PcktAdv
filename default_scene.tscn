@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://3xupn2aydl6j"]
+[gd_scene load_steps=7 format=3 uid="uid://3xupn2aydl6j"]
 
 [ext_resource type="Script" path="res://scripts/movement.cs" id="1_fvd6p"]
+[ext_resource type="PackedScene" uid="uid://cbvkeq1rf0v2t" path="res://sprites/angry bean.glb" id="2_64jfg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8sg4n"]
 
@@ -49,3 +50,8 @@ light_size = 0.1
 shadow_enabled = true
 spot_range = 50.0
 spot_attenuation = 0.5
+
+[node name="angry bean" type="StaticBody3D" parent="."]
+
+[node name="angry bean" parent="angry bean" instance=ExtResource("2_64jfg")]
+transform = Transform3D(0.999588, 0, 0.0287067, 0, 1, 0, -0.0287067, 0, 0.999588, -1.99736, 0.516883, -9.08577)
