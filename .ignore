@@ -1,0 +1,9 @@
+*.svg
+*.png
+*.import
+*.csproj
+*.sln
+*.godot
+*.tscn
+*.htm
+*.html
