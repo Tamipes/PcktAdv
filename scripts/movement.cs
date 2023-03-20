@@ -1,21 +1,42 @@
 using Godot;
 using System;
 
-public partial class movement : CharacterBody2D
+public partial class movement : CharacterBody3D
 {
-	[Export]
-	public float speed { get; set; } = 400f;
+	public const float Speed = 5.0f;
+	public const float JumpVelocity = 4.5f;
 
-	public void GetInput()
-	{
-		Vector2 inputDirection = Input.GetVector("Left", "Right", "Up", "Down");
-		Velocity = inputDirection * speed;
-	}
+	// Get the gravity from the project settings to be synced with RigidBody nodes.
+	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
 	public override void _PhysicsProcess(double delta)
 	{
-		base._PhysicsProcess(delta);
-		GetInput();
+		Vector3 velocity = Velocity;
+
+		// Add the gravity.
+		if (!IsOnFloor())
+			velocity.Y -= gravity * (float)delta;
+
+		// Handle Jump.
+		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+			velocity.Y = JumpVelocity;
+
+		// Get the input direction and handle the movement/deceleration.
+		// As good practice, you should replace UI actions with custom gameplay actions.
+		Vector2 inputDir = Input.GetVector("Left", "Right", "Up", "Down");
+		Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+		if (direction != Vector3.Zero)
+		{
+			velocity.X = direction.X * Speed;
+			velocity.Z = direction.Z * Speed;
+		}
+		else
+		{
+			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+		}
+
+		Velocity = velocity;
 		MoveAndSlide();
 	}
 }

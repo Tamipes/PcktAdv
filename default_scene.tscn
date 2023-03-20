@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://3xupn2aydl6j"]
+[gd_scene load_steps=6 format=3 uid="uid://3xupn2aydl6j"]
+
+[ext_resource type="Script" path="res://scripts/movement.cs" id="1_fvd6p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8sg4n"]
 
@@ -11,7 +13,9 @@ emission_energy_multiplier = 0.0
 normal_texture = SubResource("ImageTexture_vrn2u")
 grow_amount = 1.01
 
-[node name="default scene" type="Node2D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tr6j4"]
+
+[node name="default scene" type="Node3D"]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, 0, 0)
@@ -21,3 +25,27 @@ shape = SubResource("BoxShape3D_8sg4n")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D"]
 material = SubResource("StandardMaterial3D_1xq4v")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.85933, 0)
+script = ExtResource("1_fvd6p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_tr6j4")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CharacterBody3D"]
+lod_bias = 0.001
+sides = 25
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.635, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.017561, 14.9669, -0.00750923)
+light_color = Color(1, 0.4, 0, 1)
+light_energy = 25.0
+light_indirect_energy = 3.0
+light_size = 0.1
+shadow_enabled = true
+spot_range = 50.0
+spot_attenuation = 0.5
