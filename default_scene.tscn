@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://3xupn2aydl6j"]
+[gd_scene load_steps=12 format=3 uid="uid://3xupn2aydl6j"]
 
 [ext_resource type="Script" path="res://scripts/movement.cs" id="1_fvd6p"]
+[ext_resource type="PackedScene" uid="uid://woqfo2uvf0ns" path="res://Lobby.tscn" id="1_g0eam"]
 [ext_resource type="PackedScene" uid="uid://cbvkeq1rf0v2t" path="res://sprites/angry bean.glb" id="2_64jfg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c21g2"]
@@ -36,6 +37,9 @@ grow_amount = 1.01
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p317l")
+
+[node name="Lobby" parent="." instance=ExtResource("1_g0eam")]
+mouse_filter = 1
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, 0, 0)
