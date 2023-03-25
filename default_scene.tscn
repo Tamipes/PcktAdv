@@ -1,5 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://3xupn2aydl6j"]
+[gd_scene load_steps=19 format=3 uid="uid://3xupn2aydl6j"]
 
+[ext_resource type="Script" path="res://scripts/terrain_generation.cs" id="1_652jn"]
 [ext_resource type="Shader" uid="uid://c5l5qcwh7irn6" path="res://shaders/shader.tres" id="1_edf6a"]
 [ext_resource type="Script" path="res://scripts/movement.cs" id="1_fvd6p"]
 [ext_resource type="PackedScene" uid="uid://woqfo2uvf0ns" path="res://Lobby.tscn" id="1_g0eam"]
@@ -58,6 +59,8 @@ grow_amount = 1.01
 [node name="default scene" type="Node3D"]
 
 [node name="Terrain" type="StaticBody3D" parent="."]
+script = ExtResource("1_652jn")
+noise_text = ExtResource("2_ctiny")
 
 [node name="Mesh" type="MeshInstance3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.297432, 0, -77.9983)
