@@ -17,6 +17,7 @@ shader_parameter/noiseTextureFrag = ExtResource("2_d36td")
 [sub_resource type="PlaneMesh" id="PlaneMesh_5e6gm"]
 resource_local_to_scene = true
 material = SubResource("ShaderMaterial_vlg7m")
+custom_aabb = AABB(-75, 0, -75, 75, 50, 75)
 size = Vector2(150, 150)
 subdivide_width = 512
 subdivide_depth = 512
@@ -28,6 +29,7 @@ map_data = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
 [node name="Terrain" type="StaticBody3D" node_paths=PackedStringArray("shape")]
 script = ExtResource("1_q05vu")
+heightMapStrech = 0.66
 shape = NodePath("CollisionShape3D")
 myTexture = ExtResource("2_d36td")
 

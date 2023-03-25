@@ -1,8 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://3xupn2aydl6j"]
+[gd_scene load_steps=20 format=3 uid="uid://3xupn2aydl6j"]
 
+[ext_resource type="Script" path="res://scripts/terrain_generation.cs" id="1_652jn"]
 [ext_resource type="Shader" uid="uid://c5l5qcwh7irn6" path="res://shaders/shader.tres" id="1_edf6a"]
 [ext_resource type="Script" path="res://scripts/movement.cs" id="1_fvd6p"]
 [ext_resource type="PackedScene" uid="uid://woqfo2uvf0ns" path="res://Lobby.tscn" id="1_g0eam"]
+[ext_resource type="PackedScene" uid="uid://t4uhua8hpla5" path="res://terrain.tscn" id="1_uia4k"]
 [ext_resource type="PackedScene" uid="uid://cbvkeq1rf0v2t" path="res://sprites/angry bean.glb" id="2_64jfg"]
 [ext_resource type="Texture2D" uid="uid://b0id64jwmi2oi" path="res://sprites/noise.tres" id="2_ctiny"]
 [ext_resource type="Texture2D" uid="uid://dxcp7qlvor3k0" path="res://sprites/noise2.tres" id="3_k22h7"]
@@ -58,6 +60,9 @@ grow_amount = 1.01
 [node name="default scene" type="Node3D"]
 
 [node name="Terrain" type="StaticBody3D" parent="."]
+visible = false
+script = ExtResource("1_652jn")
+noise_text = ExtResource("2_ctiny")
 
 [node name="Mesh" type="MeshInstance3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.297432, 0, -77.9983)
@@ -67,6 +72,8 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.297432, 0, -77.9983)
 shape = SubResource("ConvexPolygonShape3D_mea3x")
+
+[node name="Terrain2" parent="." instance=ExtResource("1_uia4k")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p317l")
@@ -84,8 +91,10 @@ shape = SubResource("BoxShape3D_8sg4n")
 material = SubResource("StandardMaterial3D_1xq4v")
 
 [node name="Character" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.85933, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 38.116, 0)
 script = ExtResource("1_fvd6p")
+JumpVelocity = 9.0
+CameraSensitivity = 0.003
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Character"]
 shape = SubResource("CapsuleShape3D_tr6j4")

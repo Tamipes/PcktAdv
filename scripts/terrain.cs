@@ -49,7 +49,6 @@ public partial class terrain : StaticBody3D
 			//New new code
 
 			HeightMapShape3D heightmap = new HeightMapShape3D();
-
 			// Material bsMaterial = MeshOfPlane.Material;
 			// ShaderMaterial shMaterial = (ShaderMaterial) bsMaterial;
 			// Shader NoiseShader = shMaterial.Shader;
@@ -73,6 +72,12 @@ public partial class terrain : StaticBody3D
 				heightmap.MapData = FloatData;
 				shape.Shape = heightmap;
 			};
+			Material bsMaterial = MeshOfPlane.Material;
+			ShaderMaterial shMaterial = (ShaderMaterial) bsMaterial;
+			Shader NoiseShader = shMaterial.Shader;
+			
+
+			shape.Shape = heightmap;
 		}
 	}
 
