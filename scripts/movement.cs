@@ -6,8 +6,10 @@ public partial class movement : CharacterBody3D
 	public const float Speed = 5.0f;
 	public const float SprintMult = 2.5f;
 	private bool sprinting = false;
-	public const float JumpVelocity = 4.5f;
-
+	[Export]
+	public float JumpVelocity = 4.5f;
+	[Export]
+	public float CameraSensitivity = 0.005f;
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
@@ -35,9 +37,9 @@ public partial class movement : CharacterBody3D
 		{
 			if (@event is InputEventMouseMotion eventMouseMotion)
 			{
-				neck.RotateY(-eventMouseMotion.Relative.X * 0.005f);
+				neck.RotateY(-eventMouseMotion.Relative.X * CameraSensitivity);
 
-				cam.RotateX(-eventMouseMotion.Relative.Y * 0.005f);
+				cam.RotateX(-eventMouseMotion.Relative.Y * CameraSensitivity);
 				cam.Rotation = new Vector3(Math.Clamp(cam.Rotation.X, Mathf.DegToRad(-89.5f), Mathf.DegToRad(89.5f)), cam.Rotation.Y, cam.Rotation.Z);
 			}
 		}
