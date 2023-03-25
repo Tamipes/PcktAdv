@@ -1,8 +1,30 @@
-[gd_scene load_steps=12 format=3 uid="uid://3xupn2aydl6j"]
+[gd_scene load_steps=18 format=3 uid="uid://3xupn2aydl6j"]
 
+[ext_resource type="Shader" uid="uid://c5l5qcwh7irn6" path="res://shaders/shader.tres" id="1_edf6a"]
 [ext_resource type="Script" path="res://scripts/movement.cs" id="1_fvd6p"]
 [ext_resource type="PackedScene" uid="uid://woqfo2uvf0ns" path="res://Lobby.tscn" id="1_g0eam"]
 [ext_resource type="PackedScene" uid="uid://cbvkeq1rf0v2t" path="res://sprites/angry bean.glb" id="2_64jfg"]
+[ext_resource type="Texture2D" uid="uid://b0id64jwmi2oi" path="res://sprites/noise.tres" id="2_ctiny"]
+[ext_resource type="Texture2D" uid="uid://dxcp7qlvor3k0" path="res://sprites/noise2.tres" id="3_k22h7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vlg7m"]
+render_priority = 0
+shader = ExtResource("1_edf6a")
+shader_parameter/height = 50.0
+shader_parameter/terrain_normal_basis = Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)
+shader_parameter/heightTexture = ExtResource("2_ctiny")
+shader_parameter/normalTexture = ExtResource("3_k22h7")
+shader_parameter/noiseTextureFrag = ExtResource("2_ctiny")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5e6gm"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_vlg7m")
+size = Vector2(150, 150)
+subdivide_width = 512
+subdivide_depth = 512
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mea3x"]
+points = PackedVector3Array(50.7936, 0.793649, 50.7936, -50.7934, -0.793649, -50.7934, -50.7934, 0.793649, -50.7934, 50.7936, -0.793649, -50.7934, -50.7934, -0.793649, 50.7936, -50.7934, 0.793649, 50.7936, 50.7936, 0.793649, -50.7934, 50.7936, -0.793649, 50.7936)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c21g2"]
 sky_top_color = Color(0.384314, 0.454902, 0.54902, 1)
@@ -35,19 +57,30 @@ grow_amount = 1.01
 
 [node name="default scene" type="Node3D"]
 
+[node name="Terrain" type="StaticBody3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.297432, 0, -77.9983)
+mesh = SubResource("PlaneMesh_5e6gm")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.297432, 0, -77.9983)
+shape = SubResource("ConvexPolygonShape3D_mea3x")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p317l")
 
 [node name="Lobby" parent="." instance=ExtResource("1_g0eam")]
 mouse_filter = 1
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Floor" type="StaticBody3D" parent="."]
 transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape3D_8sg4n")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D"]
+[node name="CSGBox3D" type="CSGBox3D" parent="Floor"]
 material = SubResource("StandardMaterial3D_1xq4v")
 
 [node name="Character" type="CharacterBody3D" parent="."]
@@ -66,6 +99,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.635, 0)
 
 [node name="Cam" type="Camera3D" parent="Character/Neck"]
 
+[node name="angry bean" type="StaticBody3D" parent="."]
+
+[node name="angry bean" parent="angry bean" instance=ExtResource("2_64jfg")]
+transform = Transform3D(0.999588, 0, 0.0287067, 0, 1, 0, -0.0287067, 0, 0.999588, -1.99736, 0.516883, -9.08577)
+
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.017561, 14.9669, -0.00750923)
 light_color = Color(1, 0.4, 0, 1)
@@ -76,7 +114,12 @@ shadow_enabled = true
 spot_range = 50.0
 spot_attenuation = 0.5
 
-[node name="angry bean" type="StaticBody3D" parent="."]
-
-[node name="angry bean" parent="angry bean" instance=ExtResource("2_64jfg")]
-transform = Transform3D(0.999588, 0, 0.0287067, 0, 1, 0, -0.0287067, 0, 0.999588, -1.99736, 0.516883, -9.08577)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.906308, 0.211309, -0.365998, 0, 0.866025, 0.5, 0.422618, -0.453154, 0.784886, 0, 2.54321, 0)
+shadow_enabled = true
+directional_shadow_split_1 = 0.2
+directional_shadow_split_2 = 0.4
+directional_shadow_split_3 = 0.8
+directional_shadow_blend_splits = true
+directional_shadow_fade_start = 0.9
+directional_shadow_max_distance = 500.0
